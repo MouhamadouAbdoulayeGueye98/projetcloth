@@ -1,13 +1,12 @@
-"use client"
-import Image from "next/image"
+
 import { 
   ImageContainer, 
   StyledImage 
 } from '../styles/ProductImg';
 
 interface ProductImageProps {
-  src: string
-  alt: string
+  src: string;
+  alt: string;
 }
 
 export default function ProductImage({ src, alt }: ProductImageProps) {
@@ -16,10 +15,10 @@ export default function ProductImage({ src, alt }: ProductImageProps) {
       <StyledImage 
         src={src || "/placeholder.svg"} 
         alt={alt} 
-        fill 
+        layout="fill" // Utilisation de 'layout' pour le dimensionnement de l'image
         sizes="(max-width: 768px) 100vw, 50vw" 
         priority 
       />
     </ImageContainer>
-  )
+  );
 }

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
-import { FiArrowLeft, FiChevronDown } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
 import InformationStep from "@/components/InformationStep";
 import ShippingStep from "@/components/ShippingStep";
 import PaymentStep from "@/components/PaymentStep"

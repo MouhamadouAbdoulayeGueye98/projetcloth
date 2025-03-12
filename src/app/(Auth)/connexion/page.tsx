@@ -73,7 +73,7 @@ export default function Connexion() {
       <Container>
         <Title>Connexion</Title>
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        {/* {success && <SuccessMessage>{success}</SuccessMessage>} */}
+        {success && <SuccessMessage>{success}</SuccessMessage>}
 
         <Form onSubmit={handleSubmit}>
           <FormGroup>
@@ -109,8 +109,8 @@ export default function Connexion() {
             </Button>
           </ButtonContainer>
           <RegisterLink>
-            Vous n'avez pas de compte ?{" "}
-            <StyledLink href="/inscription">S'inscrire</StyledLink>
+          Vous n&apos;avez pas de compte ?{" "}
+          <StyledLink href="/inscription">S&apos;inscrire</StyledLink>
           </RegisterLink>
         </Form>
       </Container>

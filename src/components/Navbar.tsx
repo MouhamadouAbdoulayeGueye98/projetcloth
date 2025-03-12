@@ -1,6 +1,3 @@
-"use client"
-
-
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
@@ -35,15 +32,16 @@ interface OpenSections {
 
 const Navbar: React.FC<{ homePath?: string }> = ({ homePath = '/' }) => {
   const router = useRouter();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Utilisation de l'interface OpenSections pour gérer l'état
+  const [sections, setSections] = useState<OpenSections>({ mobileMenu: false });
 
   const handleHomeClick = () => {
     router.push(homePath);
-    setIsMobileMenuOpen(false);
+    setSections({ ...sections, mobileMenu: false });
   };
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setSections({ ...sections, mobileMenu: !sections.mobileMenu });
   };
 
   return (
@@ -51,7 +49,7 @@ const Navbar: React.FC<{ homePath?: string }> = ({ homePath = '/' }) => {
       <NavContainer>
         <LeftSection>
           <IconButtonMenu onClick={toggleMobileMenu}>
-            {isMobileMenuOpen ? <BiX size={44} /> : <BiMenuAltLeft size={35} />}
+            {sections.mobileMenu ? <BiX size={44} /> : <BiMenuAltLeft size={35} />}
           </IconButtonMenu>
 
           <NavLinks>
@@ -96,7 +94,7 @@ const Navbar: React.FC<{ homePath?: string }> = ({ homePath = '/' }) => {
       </NavContainer>
 
       {/* Passer l'état isMobileMenuOpen à MobileMenu */}
-      <MobileMenu $isOpen={isMobileMenuOpen}>
+      <MobileMenu $isOpen={sections.mobileMenu}>
         <MobileNavLinks>
           <NavLink href="#" onClick={handleHomeClick}>
             Home

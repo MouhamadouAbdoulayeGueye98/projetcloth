@@ -12,48 +12,48 @@ const CheckoutContainer = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 `;
 
-const BackButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding: 0;
-  margin-bottom: 20px;
-`;
+// const BackButton = styled.button`
+//   background: none;
+//   border: none;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   padding: 0;
+//   margin-bottom: 20px;
+// `;
 
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  margin: 20px 0;
-  text-transform: uppercase;
-`;
+// const Title = styled.h1`
+//   font-size: 24px;
+//   font-weight: bold;
+//   margin: 20px 0;
+//   text-transform: uppercase;
+// `;
 
-const StepsContainer = styled.div`
-  display: flex;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #e0e0e0;
-`;
+// const StepsContainer = styled.div`
+//   display: flex;
+//   margin-bottom: 30px;
+//   border-bottom: 1px solid #e0e0e0;
+// `;
 
-const StepButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 14px;
-  padding: 10px 20px;
-  cursor: pointer;
-  position: relative;
-  font-weight: ${(props) => (props.active ? "bold" : "normal")};
+// const StepButton = styled.button`
+//   background: none;
+//   border: none;
+//   font-size: 14px;
+//   padding: 10px 20px;
+//   cursor: pointer;
+//   position: relative;
+//   font-weight: ${(props) => (props.active ? "bold" : "normal")};
   
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: ${(props) => (props.active ? "black" : "transparent")};
-  }
-`;
+//   &:after {
+//     content: '';
+//     position: absolute;
+//     bottom: -1px;
+//     left: 0;
+//     width: 100%;
+//     height: 2px;
+//     background-color: ${(props) => (props.active ? "black" : "transparent")};
+//   }
+// `;
 
 const Layout = styled.div`
   display: flex;

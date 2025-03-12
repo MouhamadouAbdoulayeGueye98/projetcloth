@@ -10,7 +10,6 @@ import {
   LanguageSection,
   TechnologiesSection,
   Logo,
-  LogoTriangle,
   LogoText,
   TechDescription,
   TechText,

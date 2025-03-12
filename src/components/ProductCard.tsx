@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { IoMdAdd, IoMdRemove } from 'react-icons/io';
 import { BiRefresh } from 'react-icons/bi';
-import { AiOutlineHeart } from 'react-icons/ai';
+
 
 // Styled Components
 const CardContainer = styled.div`

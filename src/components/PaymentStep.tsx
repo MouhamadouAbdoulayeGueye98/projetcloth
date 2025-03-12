@@ -127,20 +127,22 @@ const PaymentMethodSelector = () => {
   const [selectedMethod, setSelectedMethod] = useState('orange-money');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Images URLs - remplacez ces URL par les chemins d'accès réels aux images téléchargées
-  const orangeMoneyImageUrl = "https://chemin/vers/image-2.png"; // Remplacer par le chemin réel de l'image des flèches
-  const waveImageUrl = "https://chemin/vers/image-1.png"; // Remplacer par le chemin réel de l'image du pingouin
+  // Images URLs
+  const orangeMoneyImageUrl = "https://chemin/vers/image-2.png"; // Remplacer par le chemin réel de l'image
+  const waveImageUrl = "https://chemin/vers/image-1.png"; // Remplacer par le chemin réel de l'image
 
   const paymentMethods = [
     {
       id: 'orange-money',
       name: 'Orange Money',
-      logo: "/images/logo1.png"
+      logo: "/images/logo1.png",
+      imageUrl: orangeMoneyImageUrl, // Ajout de l'URL d'image
     },
     {
       id: 'wave',
       name: 'Wave',
-      logo: "/images/logo2.png"
+      logo: "/images/logo2.png",
+      imageUrl: waveImageUrl, // Ajout de l'URL d'image
     }
   ];
 
@@ -190,6 +192,9 @@ const PaymentMethodSelector = () => {
               <LogoImage src={method.logo} alt={`${method.name} logo`} />
             </LogoContainer>
             
+            {/* Ajouter l'image de la méthode de paiement */}
+            <LogoImage src={method.imageUrl} alt={`${method.name} method`} />
+
             <Name>{method.name}</Name>
           </Card>
         ))}

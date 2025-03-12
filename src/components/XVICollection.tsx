@@ -12,7 +12,6 @@ import {
   ProductGrid,
   ProductCard,
   ProductImageContainer,
-  SaleTag,
   ProductInfo,
   ProductCategory,
   ProductName,

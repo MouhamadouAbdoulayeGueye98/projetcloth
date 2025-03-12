@@ -50,19 +50,19 @@ const ShippingStep = () => {
     },
   ]);
 
-  const updateQuantity = (id, delta) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-          : item
-      )
-    );
-  };
+//   const updateQuantity = (id, delta) => {
+//     setCart(
+//       cart.map((item) =>
+//         item.id === id
+//           ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+//           : item
+//       )
+//     );
+//   };
 
-  const removeItem = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
-  };
+//   const removeItem = (id) => {
+//     setCart(cart.filter((item) => item.id !== id));
+//   };
 
   const handleCheckout = () => {
     console.log("Proceeding to checkout...");
@@ -79,7 +79,7 @@ const ShippingStep = () => {
   return (
     <CartContainer>
       <ProductList>
-        {cart.map((item) => (
+        {cart.map(() => (
           <ProductCard/>
         ))}
       </ProductList>
