@@ -1,4 +1,4 @@
-"use client";
+"use client";  // Ajout de la directive "use client" pour marquer ce fichier comme côté client
 
 import { useState } from "react";
 import axios from "axios";
@@ -18,20 +18,23 @@ import {
 } from "@/styles/Connexion";
 import { ErrorMessage, SuccessMessage, ErrorInput } from "@/styles/erreur";
 
+// Déclaration des types pour les états
 export default function Connexion() {
-  const [email, setEmail] = useState<string>(""); // Préciser le type pour email
-  const [password, setPassword] = useState<string>(""); // Préciser le type pour password
-  const [error, setError] = useState<string>(""); // Préciser le type pour error
-  const [success, setSuccess] = useState<string>(""); // Préciser le type pour success
-  const [loading, setLoading] = useState<boolean>(false); // Préciser le type pour loading
+  const [email, setEmail] = useState<string>("");  // Spécifier le type string
+  const [password, setPassword] = useState<string>("");  // Spécifier le type string
+  const [error, setError] = useState<string>("");  // Spécifier le type string
+  const [success, setSuccess] = useState<string>("");  // Spécifier le type string
+  const [loading, setLoading] = useState<boolean>(false);  // Spécifier le type boolean
 
-  const handleSubmit = async (e: React.FormEvent) => {  // Typage de l'événement
+  // Spécifier le type de l'événement pour handleSubmit
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setSuccess("");
     setLoading(true);
 
     try {
+      // Utilisation de axios pour la requête POST
       const response = await axios.post("http://localhost:8000/api/users/login", {
         email,
         motDePasse: password,
@@ -39,10 +42,12 @@ export default function Connexion() {
 
       setSuccess("Connexion réussie ! Redirection...");
       localStorage.setItem("token", response.data.token);
+
+      // Redirection après 1.5s
       setTimeout(() => {
         window.location.href = "/"; // Rediriger après connexion
       }, 1500);
-    } catch (err: any) {  // Typage de 'err' pour éviter 'any'
+    } catch (err: any) {  // Typage de l'erreur avec 'any'
       setError(err.response?.data?.message || "Erreur de connexion");
     } finally {
       setLoading(false);
@@ -82,7 +87,7 @@ export default function Connexion() {
               type="email"
               id="email"
               value={email}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} // Typage pour onChange
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}  // Typage pour onChange
               placeholder="votre@email.com"
               as={error ? ErrorInput : Input}
             />
@@ -94,7 +99,7 @@ export default function Connexion() {
               type="password"
               id="password"
               value={password}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} // Typage pour onChange
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}  // Typage pour onChange
               as={error ? ErrorInput : Input}
             />
           </FormGroup>
