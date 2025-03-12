@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { IoMdAdd, IoMdRemove } from 'react-icons/io';
 import { BiRefresh } from 'react-icons/bi';
-
 
 // Styled Components
 const CardContainer = styled.div`
@@ -115,25 +114,15 @@ const ProductPrice = styled.div`
   font-size: 15px; 
 `;
 
-const ProductCard = () => {
-  const [quantity, setQuantity] = useState(1);
-
-  const increaseQuantity = () => {
-    setQuantity(prev => prev + 1);
-  };
-
-  const decreaseQuantity = () => {
-    setQuantity(prev => prev > 1 ? prev - 1 : 1);
-  };
-
+const ProductCard = ({ item, updateQuantity, removeItem }) => {
   return (
     <CardContainer>
       <ImageContainer>
         <ProductImage 
-          src="/images/img13.jpeg" 
-          alt="Cotton T Shirt" 
+          src={item.image} 
+          alt={item.name} 
         />
-        <CloseButton>
+        <CloseButton onClick={() => removeItem(item.id)}>
           <IoClose size={18} color="#333" />
         </CloseButton>
       </ImageContainer>
@@ -141,11 +130,11 @@ const ProductCard = () => {
       <SideControls>
         <SizeIndicator>L</SizeIndicator>
         <ColorBox />
-        <ControlButton onClick={increaseQuantity}>
+        <ControlButton onClick={() => updateQuantity(item.id, 1)}>
           <IoMdAdd size={14} />
         </ControlButton>
-        <QuantityDisplay>{quantity}</QuantityDisplay>
-        <ControlButton onClick={decreaseQuantity}>
+        <QuantityDisplay>{item.quantity}</QuantityDisplay>
+        <ControlButton onClick={() => updateQuantity(item.id, -1)}>
           <IoMdRemove size={14} />
         </ControlButton>
         <ControlButton style={{ marginTop: '3px' }}>
@@ -156,8 +145,8 @@ const ProductCard = () => {
       <ProductDetails>
         <ProductType>Cotton T Shirt</ProductType>
         <DetailsRow>
-          <ProductName>Full Sleeve Zipper</ProductName>
-          <ProductPrice>$99</ProductPrice>
+          <ProductName>{item.name}</ProductName>
+          <ProductPrice>${item.price}</ProductPrice>
         </DetailsRow>
       </ProductDetails>
     </CardContainer>

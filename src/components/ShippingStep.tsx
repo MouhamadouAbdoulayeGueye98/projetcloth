@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import styled from "styled-components";
 import ProductCard from "./ProductCard";
@@ -39,30 +37,30 @@ const ShippingStep = () => {
       name: "Full Sleeve Zipper",
       price: 99,
       quantity: 1,
-      image: "/images/img12.jpeg", // Using placeholder as fallback
+      image: "/images/img12.jpeg", // Placeholder image
     },
     {
       id: 2,
       name: "Basic Slim Fit T-Shirt",
       price: 99,
       quantity: 1,
-      image: "imges/img11.jpeg", // Using placeholder as fallback
+      image: "/images/img11.jpeg", // Placeholder image
     },
   ]);
 
-//   const updateQuantity = (id, delta) => {
-//     setCart(
-//       cart.map((item) =>
-//         item.id === id
-//           ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-//           : item
-//       )
-//     );
-//   };
+  const updateQuantity = (id, delta) => {
+    setCart(
+      cart.map((item) =>
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+          : item
+      )
+    );
+  };
 
-//   const removeItem = (id) => {
-//     setCart(cart.filter((item) => item.id !== id));
-//   };
+  const removeItem = (id) => {
+    setCart(cart.filter((item) => item.id !== id));
+  };
 
   const handleCheckout = () => {
     console.log("Proceeding to checkout...");
@@ -79,8 +77,13 @@ const ShippingStep = () => {
   return (
     <CartContainer>
       <ProductList>
-        {cart.map(() => (
-          <ProductCard/>
+        {cart.map((item) => (
+          <ProductCard
+            key={item.id}  // Ajouter la clé unique ici
+            item={item}     // Passer les données du produit
+            updateQuantity={updateQuantity}  // Passer la fonction updateQuantity
+            removeItem={removeItem}  // Passer la fonction removeItem
+          />
         ))}
       </ProductList>
 
