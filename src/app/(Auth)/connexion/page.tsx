@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import axios from "axios";
 import {
   Container,
@@ -18,19 +19,13 @@ import {
 import { ErrorMessage, SuccessMessage, ErrorInput } from "@/styles/erreur";
 
 export default function Connexion() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>(""); // Préciser le type pour email
+  const [password, setPassword] = useState<string>(""); // Préciser le type pour password
+  const [error, setError] = useState<string>(""); // Préciser le type pour error
+  const [success, setSuccess] = useState<string>(""); // Préciser le type pour success
+  const [loading, setLoading] = useState<boolean>(false); // Préciser le type pour loading
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      window.location.href = "/"; // Rediriger si déjà connecté
-    }
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {  // Typage de l'événement
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -47,7 +42,7 @@ export default function Connexion() {
       setTimeout(() => {
         window.location.href = "/"; // Rediriger après connexion
       }, 1500);
-    } catch (err: any) {
+    } catch (err: any) {  // Typage de 'err' pour éviter 'any'
       setError(err.response?.data?.message || "Erreur de connexion");
     } finally {
       setLoading(false);
@@ -60,7 +55,7 @@ export default function Connexion() {
 
   return (
     <>
-      <BackButton onClick={handleBack} aria-label="Retour à la page précédente">
+      <BackButton onClick={handleBack}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -87,7 +82,7 @@ export default function Connexion() {
               type="email"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} // Typage pour onChange
               placeholder="votre@email.com"
               as={error ? ErrorInput : Input}
             />
@@ -99,7 +94,7 @@ export default function Connexion() {
               type="password"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} // Typage pour onChange
               as={error ? ErrorInput : Input}
             />
           </FormGroup>
@@ -113,7 +108,6 @@ export default function Connexion() {
               {loading ? "Connexion..." : "Se connecter"}
             </Button>
           </ButtonContainer>
-
           <RegisterLink>
             Vous n&apos;avez pas de compte ?{" "}
             <StyledLink href="/inscription">S&apos;inscrire</StyledLink>
