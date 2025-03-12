@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';
+
 import { Gallery, ImageContainer, Image } from '@/styles/FashionGallery';
 import { Images } from '@/data/Products';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { IoMdAdd, IoMdRemove } from 'react-icons/io';
