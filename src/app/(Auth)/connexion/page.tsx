@@ -1,7 +1,7 @@
 "use client";  // Ajout de la directive "use client" pour marquer ce fichier comme côté client
 
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import {
   Container,
   Title,
