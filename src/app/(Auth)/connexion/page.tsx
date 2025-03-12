@@ -1,7 +1,7 @@
 "use client";  // Ajout de la directive "use client" pour marquer ce fichier comme côté client
 
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
   Container,
   Title,
@@ -47,7 +47,7 @@ export default function Connexion() {
       setTimeout(() => {
         window.location.href = "/"; // Rediriger après connexion
       }, 1500);
-    } catch (err: any) {  // Typage de l'erreur avec 'any'
+    } catch (err: AxiosError) {  // Typage avec AxiosError pour l'erreur
       setError(err.response?.data?.message || "Erreur de connexion");
     } finally {
       setLoading(false);
