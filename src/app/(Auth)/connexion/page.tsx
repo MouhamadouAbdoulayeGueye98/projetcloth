@@ -1,124 +1,131 @@
-"use client";  // Ajout de la directive "use client" pour marquer ce fichier comme côté client
+"use client";
 
-import { useState } from "react";
-import axios from "axios";
-import {
-  Container,
-  Title,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  ButtonContainer,
-  Button,
-  BackButton,
-  ForgotPassword,
-  RegisterLink,
-  StyledLink,
-} from "@/styles/Connexion";
-import { ErrorMessage, SuccessMessage, ErrorInput } from "@/styles/erreur";
+import { useState } from 'react';
+import styled from 'styled-components';
 
-// Déclaration des types pour les états
-export default function Connexion() {
-  const [email, setEmail] = useState<string>("");  // Spécifier le type string
-  const [password, setPassword] = useState<string>("");  // Spécifier le type string
-  const [error, setError] = useState<string>("");  // Spécifier le type string
-  const [success, setSuccess] = useState<string>("");  // Spécifier le type string
-  const [loading, setLoading] = useState<boolean>(false);  // Spécifier le type boolean
+interface FormData {
+  username: string;
+  password: string;
+}
 
-  // Spécifier le type de l'événement pour handleSubmit
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-    setLoading(true);
+const FormWrapper = styled.div`
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
 
-    try {
-      // Utilisation de axios pour la requête POST
-      const response = await axios.post("http://localhost:8000/api/users/login", {
-        email,
-        motDePasse: password,
-      });
+const Title = styled.h2`
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+`;
 
-      setSuccess("Connexion réussie ! Redirection...");
-      localStorage.setItem("token", response.data.token);
+const InputField = styled.input`
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+`;
 
-      // Redirection après 1.5s
-      setTimeout(() => {
-        window.location.href = "/"; // Rediriger après connexion
-      }, 1500);
-    } catch (err: AxiosError) {  // Typage avec AxiosError pour l'erreur
-      setError(err.response?.data?.message || "Erreur de connexion");
-    } finally {
-      setLoading(false);
-    }
+const Button = styled.button`
+  width: 100%;
+  padding: 12px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #005bb5;
+  }
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 0.875rem;
+  text-align: center;
+`;
+
+const LoginForm = () => {
+  const [formData, setFormData] = useState<FormData>({ username: '', password: '' });
+  const [error, setError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleBack = () => {
-    window.history.back();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:8000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.message || 'Une erreur est survenue.');
+        setIsLoading(false);
+        return;
+      }
+
+      // Si l'inscription réussit, rediriger l'utilisateur ou effectuer une autre action
+      alert('Inscription réussie !');
+    } catch (error) {
+      setError('Erreur lors de la connexion avec l\'API');
+    }
+
+    setIsLoading(false);
   };
 
   return (
-    <>
-      <BackButton onClick={handleBack}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-        Retour
-      </BackButton>
-
-      <Container>
-        <Title>Connexion</Title>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        {success && <SuccessMessage>{success}</SuccessMessage>}
-
-        <Form onSubmit={handleSubmit}>
-          <FormGroup>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}  // Typage pour onChange
-              placeholder="votre@email.com"
-              as={error ? ErrorInput : Input}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label htmlFor="password">Mot de passe</Label>
-            <Input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}  // Typage pour onChange
-              as={error ? ErrorInput : Input}
-            />
-          </FormGroup>
-
-          <ForgotPassword href="/reset-password">
-            Mot de passe oublié ?
-          </ForgotPassword>
-
-          <ButtonContainer>
-            <Button type="submit" disabled={loading}>
-              {loading ? "Connexion..." : "Se connecter"}
-            </Button>
-          </ButtonContainer>
-          <RegisterLink>
-            Vous n&apos;avez pas de compte ?{" "}
-            <StyledLink href="/inscription">S&apos;inscrire</StyledLink>
-          </RegisterLink>
-        </Form>
-      </Container>
-    </>
+    <FormWrapper>
+      <Title>Connexion</Title>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <InputField
+            type="text"
+            name="username"
+            placeholder="Nom d'utilisateur"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <InputField
+            type="password"
+            name="password"
+            placeholder="Mot de passe"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? 'Chargement...' : 'Se connecter'}
+          </Button>
+        </div>
+      </form>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+    </FormWrapper>
   );
-}
+};
+
+export default LoginForm;
