@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Container,
@@ -19,13 +17,19 @@ import {
 import { ErrorMessage, SuccessMessage, ErrorInput } from "@/styles/erreur";
 
 export default function Connexion() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      window.location.href = "/"; // Rediriger si déjà connecté
+    }
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -42,7 +46,7 @@ export default function Connexion() {
       setTimeout(() => {
         window.location.href = "/"; // Rediriger après connexion
       }, 1500);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.response?.data?.message || "Erreur de connexion");
     } finally {
       setLoading(false);
@@ -55,7 +59,7 @@ export default function Connexion() {
 
   return (
     <>
-      <BackButton onClick={handleBack}>
+      <BackButton onClick={handleBack} aria-label="Retour à la page précédente">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -108,9 +112,10 @@ export default function Connexion() {
               {loading ? "Connexion..." : "Se connecter"}
             </Button>
           </ButtonContainer>
+
           <RegisterLink>
-          Vous n&apos;avez pas de compte ?{" "}
-          <StyledLink href="/inscription">S&apos;inscrire</StyledLink>
+            Vous n&apos;avez pas de compte ?{" "}
+            <StyledLink href="/inscription">S&apos;inscrire</StyledLink>
           </RegisterLink>
         </Form>
       </Container>
